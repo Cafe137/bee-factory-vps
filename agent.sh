@@ -9,7 +9,6 @@ free -h
 
 # install required packages
 apt-get update
-apt-get install nginx -y
 apt-get install python -y
 apt-get install docker.io -y
 apt-get install build-essential -y
@@ -23,22 +22,15 @@ nvm install 16
 node -v
 npm i -g yarn
 
-# clone bee-factory
+# run bee-factory
 GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git clone https://github.com/ethersphere/bee-factory.git
-cp /root/bee.env /root/bee-factory/scripts/.env
 cd bee-factory
 yarn install
-
-# create stack
 ./scripts/network.sh
 ./scripts/blockchain.sh
 npm run migrate:contracts
 npm run supply
 chmod -R 777 ./scripts/bee-data-dirs
 
-# put nginx configuration in place
-cp /root/nginx.conf /etc/nginx/nginx.conf
-service nginx restart
-
 # run bee
-./scripts/bee.sh start --workers=0 --ephemeral
+./scripts/bee.sh start --workers=1 --ephemeral --hostname=0.0.0.0

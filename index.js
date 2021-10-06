@@ -19,11 +19,14 @@ async function runCommandAndStreamMessages(ssh, command, cwd) {
 }
 
 async function main() {
+    const settings = {
+        host: process.env.BEE_HOST,
+        username: process.env.BEE_USERNAME,
+        password: process.env.BEE_PASSWORD
+    }
     const ssh = new NodeSSH()
-    await ssh.connect(JSON.parse(fs.readFileSync('settings.json')))
+    await ssh.connect(settings)
     await ssh.putFile('agent.sh', '/root/agent.sh')
-    await ssh.putFile('nginx.conf', '/root/nginx.conf')
-    await ssh.putFile('bee.env', '/root/bee.env')
     await runCommandAndStreamMessages(ssh, 'bash /root/agent.sh')
     ssh.dispose()
 }

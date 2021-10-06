@@ -22,13 +22,12 @@ Requires `root` user with password authentication method.
 
 What you need to do:
 
-1. Create a new Ubuntu 20.04 VPS (tested with DigitalOcean $5 VPS)
-2. Set `host`, `username` and `password` in `settings.json`
+1. Create a new Ubuntu 20.04 VPS (tested with DigitalOcean $10 VPS)
+2. Set `BEE_HOST`, `BEE_USERNAME` and `BEE_PASSWORD` environment variables
 3. Run `npm i && npm start`
 
 What will happen:
 
-1. `agent.sh`, `nginx.conf` and `bee.env` will be copied to the VPS
-2. `agent.sh` is executed using the `node-ssh` package
-3. A single ephemeral Bee instance will be created using [Bee-Factory](https://github.com/ethersphere/bee-factory)
-4. Bee endpoints will be exposed using nginx reverse proxies on ports `8080` and `8081`
+1. `agent.sh` will be copied to the VPS and executed using the `node-ssh` package
+2. One queen and one worker ephemeral Bee instances will be created using [Bee-Factory](https://github.com/ethersphere/bee-factory)
+3. Bee endpoints will be exposed on ports `1633`, `1635` and `11633`, `11635`
